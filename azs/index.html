@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Publiczny system informacyjny KU AZS SWPS Poznań." />
+    <title>AZS SWPS | System informacyjny klubu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <div class="container">
+        <header class="topbar">
+          <button class="brand" type="button" data-open-tab="announcements" aria-label="Przejdź do komunikatów">
+            <img src="https://vizline.vipserv.org/logoazsswps.png" alt="AZS SWPS Poznań" />
+          </button>
+          <div class="public-pill"><span class="public-pill__dot" aria-hidden="true"></span>Publiczny system informacyjny klubu</div>
+        </header>
+
+        <main class="dashboard">
+          <nav class="tabs-nav" role="tablist" aria-label="Zakładki systemu informacyjnego">
+            <button class="tab-button is-active" type="button" role="tab" aria-selected="true" data-tab-button="announcements">Komunikaty</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-button="membership">Jak zapisać się do AZS</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-button="account">Twoje dane i zawody</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-button="contact">Kontakt</button>
+          </nav>
+
+          <section class="tab-panel is-active" role="tabpanel" data-tab-panel="announcements">
+            <div class="panel-header">
+              <div><p class="eyebrow">Bądź na bieżąco</p><h1>Komunikaty</h1><p>Aktualne informacje organizacyjne KU AZS SWPS Poznań.</p></div>
+              <span id="announcements-status" class="sync-badge">Aktualizowanie...</span>
+            </div>
+            <div id="announcements-list" class="announcements-list" aria-live="polite">
+              <article class="loading-card"><span class="spinner" aria-hidden="true"></span><p>Pobieram najnowsze komunikaty.</p></article>
+            </div>
+          </section>
+
+          <section class="tab-panel" role="tabpanel" data-tab-panel="membership" hidden>
+            <div class="panel-header"><div><p class="eyebrow">Członkostwo</p><h2>Jak zapisać się do AZS</h2></div></div>
+            <div id="membership-content" class="prose-card">
+              <p>Niniejsza strona służy rejestracji członków klubu oraz przekazywaniu informacji o wydarzeniach i zawodach osobom zainteresowanym konkretnymi dyscyplinami.</p>
+              <p>Zgłoszenie do Klubu AZS oraz opłacenie rocznej składki członkowskiej są możliwe za pośrednictwem strony <a href="https://planeta.azs.pl/formularz/zgloszenie-czlonkostwa-26-27" target="_blank" rel="noopener noreferrer">Planeta AZS</a>. Jako klub wskaż koniecznie: <strong>AZS USWPS Poznań</strong>.</p>
+              <p>Po akceptacji zapisu przez władze klubu zyskasz możliwość przeglądania swoich danych oraz zapisów na zawody akademickie w systemie <a href="https://planeta.azs.pl/" target="_blank" rel="noopener noreferrer">Planeta AZS</a>.</p>
+              <p>Dołącz także do naszych grup na <a href="https://mail.google.com/mail/u/0/#chat/space/AAQACIFm674" target="_blank" rel="noopener noreferrer">Google Chat</a> oraz <a href="https://chat.whatsapp.com/INKLntl00ZH9gl5WBDtPOf" target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>
+            </div>
+          </section>
+
+          <section class="tab-panel" role="tabpanel" data-tab-panel="account" hidden>
+            <div class="panel-header"><div><p class="eyebrow">Panel członkowski</p><h2>Twoje dane i zawody</h2><p>Przejdź do chronionego systemu rejestracji i zapisów.</p></div></div>
+            <div class="access-grid" aria-label="Warunki dostępu do panelu">
+              <article class="access-card"><span>01</span><div><h3>Użyj komputera</h3><p>Otwórz panel na komputerze stacjonarnym lub laptopie. Urządzenia mobilne nie są obecnie obsługiwane.</p></div></article>
+              <article class="access-card"><span>02</span><div><h3>Zaloguj konto SWPS</h3><p>W tej samej przeglądarce zaloguj się wyłącznie na konto <strong>@st.swps.edu.pl</strong> lub <strong>@swps.edu.pl</strong>.</p></div></article>
+              <article class="access-card access-card--warning"><span>!</span><div><h3>Unikaj problematycznych trybów</h3><p>Nie używaj trybu prywatnego, Safari ani przeglądarki otwieranej wewnątrz WhatsApp.</p></div></article>
+            </div>
+            <a class="system-button" href="https://script.google.com/macros/s/AKfycbxght7_jio1c4jCHeFFP5Ols0lDUkpGXBs5iZY0HNRUyfQSE8QQZWgAqZCD0lfgpvGp4Q/exec">
+              <span>Przejdź do swoich danych i zawodów</span><span class="system-button__arrow" aria-hidden="true">→</span>
+            </a>
+          </section>
+
+          <section class="tab-panel" role="tabpanel" data-tab-panel="contact" hidden>
+            <div class="panel-header"><div><p class="eyebrow">KU AZS SWPS Poznań</p><h2>Kontakt</h2><p>Zarząd Klubu Uczelnianego AZS Uniwersytetu SWPS w Poznaniu.</p></div></div>
+            <div class="board-grid">
+              <article class="board-card board-card--primary"><span class="board-card__role">Prezes</span><h3>Maciej Kościelniak</h3></article>
+              <article class="board-card"><span class="board-card__role">Wiceprezes</span><h3>Jędrzej Ratajczak</h3></article>
+              <article class="board-card"><span class="board-card__role">Sekretarz</span><h3>Paweł Kazało</h3></article>
+              <article class="board-card"><span class="board-card__role">Członek zarządu</span><h3>Tomasz Skotarczak</h3></article>
+            </div>
+          </section>
+        </main>
+
+        <footer class="footer"><span>KU AZS Uniwersytetu SWPS w Poznaniu</span><button type="button" data-open-tab="contact">Skontaktuj się z nami</button></footer>
+      </div>
+    </div>
+  </body>
+</html>
