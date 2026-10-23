@@ -50,7 +50,6 @@ h1 em { color: var(--blue); font-family: "Newsreader", serif; font-weight: 600; 
 .section-heading > span { display: grid; width: 2.2rem; height: 2.2rem; flex: 0 0 2.2rem; place-items: center; border-radius: 0.7rem; background: var(--mint); font-size: 0.7rem; font-weight: 800; }
 .section-heading h2 { margin: 0 0 0.2rem; font-size: 1.1rem; }
 .section-heading p { margin: 0; color: var(--muted); font-size: 0.8rem; }
-.section-heading--rates { margin-top: 1.35rem; }
 .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem 1rem; }
 .field { display: grid; gap: 0.55rem; }
 .field--wide { grid-column: 1 / -1; }
@@ -75,10 +74,14 @@ h1 em { color: var(--blue); font-family: "Newsreader", serif; font-weight: 600; 
 .range-field output { border-radius: 999px; background: var(--blue); color: white; padding: 0.25rem 0.55rem; font-size: 0.72rem; }
 .range-field input[type="range"] { width: 100%; accent-color: var(--blue); cursor: pointer; }
 .hidden { display: none !important; }
-.currency-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-.currency-card { display: grid; gap: 0.3rem; border: 1px solid var(--line); border-radius: 1rem; padding: 0.75rem 0.9rem; }
-.currency-card input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 1.25rem; font-weight: 800; }
-.currency-card small { color: var(--muted); font-size: 0.67rem; }
+.rates-compact { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem; margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 0.8rem; }
+.rates-compact__heading strong, .rates-compact__heading small { display: block; white-space: nowrap; }
+.rates-compact__heading strong { font-size: 0.74rem; }
+.rates-compact__heading small { margin-top: 0.15rem; color: var(--muted); font-size: 0.58rem; }
+.currency-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+.currency-card { display: flex; align-items: center; gap: 0.45rem; border: 1px solid var(--line); border-radius: 0.75rem; padding: 0.42rem 0.6rem; }
+.currency-card > span { flex: 0 0 auto; color: var(--muted); font-size: 0.6rem; }
+.currency-card input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 0.85rem; font-weight: 800; text-align: right; }
 .form-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.9rem; }
 .button { border: 0; border-radius: 999px; padding: 0.85rem 1.1rem; font-size: 0.75rem; font-weight: 800; cursor: pointer; transition: transform 160ms ease, background 160ms ease; }
 .button:hover, .button:focus-visible { transform: translateY(-2px); }
@@ -88,8 +91,8 @@ h1 em { color: var(--blue); font-family: "Newsreader", serif; font-weight: 600; 
 .results-panel__top { display: flex; align-items: center; justify-content: space-between; }
 .results-panel__top .eyebrow { color: var(--mint); }
 .results-panel__top > span { border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 0.45rem 0.65rem; font-size: 0.65rem; font-weight: 800; }
-.total { display: flex; align-items: flex-start; margin: 0.5rem 0 0; color: var(--mint); letter-spacing: -0.05em; }
-.total span { padding-top: 0.4rem; font-size: 1.7rem; }
+.total { display: flex; align-items: baseline; gap: 0.45rem; margin: 0.5rem 0 0; color: var(--mint); letter-spacing: -0.05em; }
+.total span { font-size: 1.45rem; }
 .total strong { font-size: clamp(3.2rem, 6vw, 4.8rem); line-height: 1; }
 .total-caption { margin: 0.35rem 0 1rem; color: rgba(255,255,255,0.55); font-size: 0.72rem; }
 .converted { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
@@ -123,6 +126,7 @@ footer { display: flex; justify-content: space-between; gap: 1rem; border-top: 1
   .topbar { align-items: flex-start; flex-direction: column; }
   .rate-status { width: 100%; }
   .field-grid, .currency-grid, .converted, .option-grid { grid-template-columns: 1fr; }
+  .rates-compact { grid-template-columns: 1fr; gap: 0.55rem; }
   .field--wide { grid-column: auto; }
   .form-actions, footer { align-items: flex-start; flex-direction: column; }
   .method-note { grid-template-columns: 1fr; gap: 0.5rem; }

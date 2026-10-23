@@ -69,14 +69,14 @@ function calculate() {
   const totalEur = total * gbpEur;
   const reservePln = totalPln * (1 + reserveRate);
 
-  latestCalculation = { participants, duration, hourlyRate, perPerson, participantRewards, platformFee, vat, total, totalPln, totalEur, reservePln, reserveRate, includeVat, includeReserve };
-  output.totalGbp.textContent = plainNumber.format(total);
-  output.totalPln.textContent = money.PLN.format(totalPln);
+  latestCalculation = { participants, duration, hourlyRate, perPerson, participantRewards, platformFee, vat, total, totalPln, totalEur, reservePln, reserveRate, includeVat, includeReserve, gbpPln };
+  output.totalGbp.textContent = money.GBP.format(total);
+  output.totalPln.textContent = plainNumber.format(totalPln);
   output.totalEur.textContent = money.EUR.format(totalEur);
-  output.rewardTotal.textContent = money.GBP.format(participantRewards);
-  output.feeTotal.textContent = money.GBP.format(platformFee);
-  output.vatTotal.textContent = money.GBP.format(vat);
-  output.perPerson.textContent = money.GBP.format(perPerson);
+  output.rewardTotal.textContent = money.PLN.format(participantRewards * gbpPln);
+  output.feeTotal.textContent = money.PLN.format(platformFee * gbpPln);
+  output.vatTotal.textContent = money.PLN.format(vat * gbpPln);
+  output.perPerson.textContent = money.PLN.format(perPerson * gbpPln);
   output.reservePln.textContent = money.PLN.format(reservePln);
   output.reserveLabel.textContent = `${plainNumber.format(reserveRate * 100).replace(",00", "")}%`;
   output.totalCaption.textContent = includeVat ? "Z doliczonym VAT 23%" : "Bez VAT";
@@ -167,10 +167,10 @@ async function copySummary() {
     `Uczestnicy: ${c.participants}`,
     `Czas badania: ${c.duration} min`,
     `Stawka: ${money.GBP.format(c.hourlyRate)}/h`,
-    `Wynagrodzenia: ${money.GBP.format(c.participantRewards)}`,
-    `Opłata Prolific: ${money.GBP.format(c.platformFee)}`,
-    `VAT: ${c.includeVat ? money.GBP.format(c.vat) : "nie doliczono"}`,
-    `Razem: ${money.GBP.format(c.total)} / ${money.PLN.format(c.totalPln)} / ${money.EUR.format(c.totalEur)}`,
+    `Wynagrodzenia: ${money.PLN.format(c.participantRewards * c.gbpPln)}`,
+    `Opłata Prolific: ${money.PLN.format(c.platformFee * c.gbpPln)}`,
+    `VAT: ${c.includeVat ? money.PLN.format(c.vat * c.gbpPln) : "nie doliczono"}`,
+    `Razem: ${money.PLN.format(c.totalPln)} / ${money.GBP.format(c.total)} / ${money.EUR.format(c.totalEur)}`,
   ];
   if (c.includeReserve) summary.push(`Budżet z rezerwą ${plainNumber.format(c.reserveRate * 100)}%: ${money.PLN.format(c.reservePln)}`);
   await navigator.clipboard.writeText(summary.join("\n"));

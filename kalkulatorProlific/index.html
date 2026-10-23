@@ -73,14 +73,12 @@
               </label>
             </div>
 
-            <div class="section-heading section-heading--rates">
-              <span>02</span>
-              <div><h2>Kursy walut</h2><p>Automatycznie z tabeli A Narodowego Banku Polskiego.</p></div>
-            </div>
-
-            <div class="currency-grid">
-              <label class="currency-card"><span>GBP / PLN</span><input id="gbp-pln" type="number" min="0.01" step="0.0001" value="5.2498" /><small>1 GBP w PLN</small></label>
-              <label class="currency-card"><span>GBP / EUR</span><input id="gbp-eur" type="number" min="0.01" step="0.0001" value="1.1954" /><small>wyliczony przez PLN</small></label>
+            <div class="rates-compact">
+              <div class="rates-compact__heading"><strong>Kursy walut</strong><small>NBP, aktualizowane automatycznie</small></div>
+              <div class="currency-grid">
+                <label class="currency-card"><span>GBP / PLN</span><input id="gbp-pln" type="number" min="0.01" step="0.0001" value="5.2498" /></label>
+                <label class="currency-card"><span>GBP / EUR</span><input id="gbp-eur" type="number" min="0.01" step="0.0001" value="1.1954" /></label>
+              </div>
             </div>
 
             <div class="form-actions">
@@ -90,12 +88,12 @@
           </form>
 
           <aside class="results-panel" aria-live="polite">
-            <div class="results-panel__top"><p class="eyebrow">Koszt całkowity</p><span>GBP</span></div>
-            <div class="total"><span>£</span><strong id="total-gbp">0,00</strong></div>
+            <div class="results-panel__top"><p class="eyebrow">Koszt całkowity</p><span>PLN</span></div>
+            <div class="total"><strong id="total-pln">0,00</strong><span>zł</span></div>
             <p class="total-caption" id="total-caption">Z VAT naliczonym od opłaty platformowej</p>
 
             <div class="converted">
-              <div><span>W złotych</span><strong id="total-pln">0,00 zł</strong></div>
+              <div><span>W funtach</span><strong id="total-gbp">0,00 £</strong></div>
               <div><span>W euro</span><strong id="total-eur">0,00 €</strong></div>
             </div>
 
