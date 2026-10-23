@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kalkulator kosztów badania w Prolific z aktualnym kursem GBP/PLN NBP." />
+    <title>Kalkulator Prolific | SWPS Poznań</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Newsreader:ital,wght@1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Strona główna SWPS Poznań">
+          <span class="brand__mark">P</span>
+          <span><strong>Prolific</strong><small>research budget</small></span>
+        </a>
+        <div class="rate-status" id="rate-status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span>Pobieranie kursów NBP...</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Kalkulator kosztów badania</p>
+            <h1>Budżet Prolific<br /><em>bez niespodzianek.</em></h1>
+          </div>
+          <p class="hero__copy">Podaj parametry badania, a kalkulator natychmiast przeliczy wynagrodzenia, opłatę platformową, VAT i rezerwę w GBP, PLN oraz EUR.</p>
+        </section>
+
+        <section class="calculator-grid">
+          <form class="input-panel" id="calculator-form" novalidate>
+            <div class="section-heading">
+              <span>01</span>
+              <div><h2>Parametry badania</h2><p>Niebieskie pola możesz swobodnie zmieniać.</p></div>
+            </div>
+
+            <div class="field-grid">
+              <label class="field">
+                <span>Liczba uczestników</span>
+                <div class="input-wrap"><input id="participants" type="number" min="1" step="1" value="250" inputmode="numeric" /><b>os.</b></div>
+              </label>
+              <label class="field">
+                <span>Szacowany czas badania</span>
+                <div class="input-wrap"><input id="duration" type="number" min="1" step="1" value="5" inputmode="numeric" /><b>min</b></div>
+              </label>
+              <label class="field field--wide">
+                <span>Stawka godzinowa uczestnika</span>
+                <div class="input-wrap"><input id="hourly-rate" type="number" min="6" step="0.5" value="6" inputmode="decimal" /><b>GBP/h</b></div>
+                <small id="rate-guidance">Minimum Prolific: £6/h, rekomendowana stawka: co najmniej £9/h.</small>
+              </label>
+            </div>
+
+            <details class="advanced">
+              <summary>Ustawienia kosztów i podatku <span>+</span></summary>
+              <div class="field-grid field-grid--advanced">
+                <label class="field"><span>Opłata Prolific</span><div class="input-wrap"><input id="platform-fee" type="number" min="0" step="0.1" value="33.3" /><b>%</b></div></label>
+                <label class="field"><span>Stawka VAT</span><div class="input-wrap"><input id="vat-rate" type="number" min="0" step="1" value="23" /><b>%</b></div></label>
+                <label class="field"><span>Rezerwa kursowa</span><div class="input-wrap"><input id="reserve-rate" type="number" min="0" step="1" value="15" /><b>%</b></div></label>
+                <label class="field"><span>Podstawa VAT</span><select id="vat-base"><option value="fee">Tylko opłata Prolific</option><option value="total">Cały koszt, jak w arkuszu</option></select></label>
+              </div>
+              <p class="tax-note">Według aktualnej dokumentacji Prolific VAT jest naliczany na opłatę platformową, jeśli ma zastosowanie. Wybierz wariant arkusza, aby odtworzyć jego pierwotne wyniki.</p>
+            </details>
+
+            <div class="section-heading section-heading--rates">
+              <span>02</span>
+              <div><h2>Kursy walut</h2><p>Automatycznie z tabeli A Narodowego Banku Polskiego.</p></div>
+            </div>
+
+            <div class="currency-grid">
+              <label class="currency-card"><span>GBP / PLN</span><input id="gbp-pln" type="number" min="0.01" step="0.0001" value="5.2498" /><small>1 GBP w PLN</small></label>
+              <label class="currency-card"><span>GBP / EUR</span><input id="gbp-eur" type="number" min="0.01" step="0.0001" value="1.1954" /><small>wyliczony przez PLN</small></label>
+            </div>
+
+            <div class="form-actions">
+              <button class="button button--ghost" id="refresh-rates" type="button">Odśwież kursy</button>
+              <button class="button button--text" id="reset-calculator" type="button">Przywróć wartości</button>
+            </div>
+          </form>
+
+          <aside class="results-panel" aria-live="polite">
+            <div class="results-panel__top"><p class="eyebrow">Koszt całkowity</p><span>GBP</span></div>
+            <div class="total"><span>£</span><strong id="total-gbp">0,00</strong></div>
+            <p class="total-caption" id="total-caption">Z VAT naliczonym od opłaty platformowej</p>
+
+            <div class="converted">
+              <div><span>W złotych</span><strong id="total-pln">0,00 zł</strong></div>
+              <div><span>W euro</span><strong id="total-eur">0,00 €</strong></div>
+            </div>
+
+            <div class="breakdown">
+              <h2>Skąd bierze się kwota?</h2>
+              <div class="breakdown-row"><span>Wynagrodzenia uczestników</span><strong id="reward-total">£0,00</strong></div>
+              <div class="breakdown-row"><span>Opłata platformowa</span><strong id="fee-total">£0,00</strong></div>
+              <div class="breakdown-row"><span>VAT</span><strong id="vat-total">£0,00</strong></div>
+              <div class="breakdown-row breakdown-row--muted"><span>Wynagrodzenie jednej osoby</span><strong id="per-person">£0,00</strong></div>
+            </div>
+
+            <div class="reserve-card">
+              <div><span>Budżet z rezerwą <b id="reserve-label">15%</b></span><strong id="reserve-pln">0,00 zł</strong></div>
+              <p>Bezpieczna wartość do wpisania w kosztorysie projektu.</p>
+            </div>
+
+            <button class="button button--copy" id="copy-summary" type="button">Kopiuj podsumowanie</button>
+          </aside>
+        </section>
+
+        <section class="method-note">
+          <span>Jak liczymy?</span>
+          <p>Wynagrodzenia = liczba osób × czas badania ÷ 60 × stawka godzinowa. Następnie doliczamy opłatę platformową, odpowiednio naliczony VAT oraz opcjonalną rezerwę kursową.</p>
+        </section>
+      </main>
+
+      <footer><span>Kalkulator pomocniczy SWPS Poznań</span><span>Kursy walut: NBP API</span></footer>
+    </div>
+  </body>
+</html>
