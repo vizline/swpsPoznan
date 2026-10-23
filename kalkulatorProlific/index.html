@@ -30,7 +30,7 @@
             <p class="eyebrow">Kalkulator kosztów badania</p>
             <h1>Budżet Prolific<br /><em>bez niespodzianek.</em></h1>
           </div>
-          <p class="hero__copy">Podaj parametry badania, a kalkulator natychmiast przeliczy wynagrodzenia, opłatę platformową, VAT i rezerwę w GBP, PLN oraz EUR.</p>
+          <p class="hero__copy">Podaj parametry i od razu poznaj koszt badania w GBP, PLN oraz EUR.</p>
         </section>
 
         <section class="calculator-grid">
@@ -38,6 +38,19 @@
             <div class="section-heading">
               <span>01</span>
               <div><h2>Parametry badania</h2><p>Niebieskie pola możesz swobodnie zmieniać.</p></div>
+            </div>
+
+            <div class="option-grid">
+              <label class="option-card">
+                <input id="include-vat" type="checkbox" />
+                <span class="switch" aria-hidden="true"></span>
+                <span><strong>Czy potrzebujesz doliczyć VAT?</strong><small>Zaznacz dla projektów finansowanych przez SWPS lub instytucje zewnętrzne. Nie zaznaczaj dla projektów studenckich lub finansowanych z własnych środków.</small></span>
+              </label>
+              <label class="option-card">
+                <input id="include-reserve" type="checkbox" />
+                <span class="switch" aria-hidden="true"></span>
+                <span><strong>Czy chcesz doliczyć rezerwę?</strong><small>Na możliwą zmianę kursu walut lub ubytek uczestników badania.</small></span>
+              </label>
             </div>
 
             <div class="field-grid">
@@ -49,23 +62,16 @@
                 <span>Szacowany czas badania</span>
                 <div class="input-wrap"><input id="duration" type="number" min="1" step="1" value="5" inputmode="numeric" /><b>min</b></div>
               </label>
-              <label class="field field--wide">
-                <span>Stawka godzinowa uczestnika</span>
-                <div class="input-wrap"><input id="hourly-rate" type="number" min="6" step="0.5" value="6" inputmode="decimal" /><b>GBP/h</b></div>
+              <label class="field field--wide range-field">
+                <span>Stawka godzinowa uczestnika <output id="hourly-rate-value" for="hourly-rate">£6/h</output></span>
+                <input id="hourly-rate" type="range" min="6" max="30" step="0.5" value="6" />
                 <small id="rate-guidance">Minimum Prolific: £6/h, rekomendowana stawka: co najmniej £9/h.</small>
               </label>
+              <label class="field reserve-field hidden" id="reserve-field">
+                <span>Wysokość rezerwy</span>
+                <div class="input-wrap"><input id="reserve-rate" type="number" min="0" step="1" value="15" /><b>%</b></div>
+              </label>
             </div>
-
-            <details class="advanced">
-              <summary>Ustawienia kosztów i podatku <span>+</span></summary>
-              <div class="field-grid field-grid--advanced">
-                <label class="field"><span>Opłata Prolific</span><div class="input-wrap"><input id="platform-fee" type="number" min="0" step="0.1" value="33.3" /><b>%</b></div></label>
-                <label class="field"><span>Stawka VAT</span><div class="input-wrap"><input id="vat-rate" type="number" min="0" step="1" value="23" /><b>%</b></div></label>
-                <label class="field"><span>Rezerwa kursowa</span><div class="input-wrap"><input id="reserve-rate" type="number" min="0" step="1" value="15" /><b>%</b></div></label>
-                <label class="field"><span>Podstawa VAT</span><select id="vat-base"><option value="fee">Tylko opłata Prolific</option><option value="total">Cały koszt, jak w arkuszu</option></select></label>
-              </div>
-              <p class="tax-note">Według aktualnej dokumentacji Prolific VAT jest naliczany na opłatę platformową, jeśli ma zastosowanie. Wybierz wariant arkusza, aby odtworzyć jego pierwotne wyniki.</p>
-            </details>
 
             <div class="section-heading section-heading--rates">
               <span>02</span>
@@ -101,7 +107,7 @@
               <div class="breakdown-row breakdown-row--muted"><span>Wynagrodzenie jednej osoby</span><strong id="per-person">£0,00</strong></div>
             </div>
 
-            <div class="reserve-card">
+            <div class="reserve-card hidden" id="reserve-card">
               <div><span>Budżet z rezerwą <b id="reserve-label">15%</b></span><strong id="reserve-pln">0,00 zł</strong></div>
               <p>Bezpieczna wartość do wpisania w kosztorysie projektu.</p>
             </div>

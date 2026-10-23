@@ -1,12 +1,12 @@
 const NBP_API = "https://api.nbp.pl/api/exchangerates/rates/a";
+const STORAGE_KEY = "prolific-calculator-v2";
 const defaults = {
   participants: 250,
   duration: 5,
   hourlyRate: 6,
-  platformFee: 33.3,
-  vatRate: 23,
+  includeVat: false,
+  includeReserve: false,
   reserveRate: 15,
-  vatBase: "fee",
   gbpPln: 5.2498,
   gbpEur: 1.1954,
 };
@@ -15,10 +15,9 @@ const fields = {
   participants: document.getElementById("participants"),
   duration: document.getElementById("duration"),
   hourlyRate: document.getElementById("hourly-rate"),
-  platformFee: document.getElementById("platform-fee"),
-  vatRate: document.getElementById("vat-rate"),
+  includeVat: document.getElementById("include-vat"),
+  includeReserve: document.getElementById("include-reserve"),
   reserveRate: document.getElementById("reserve-rate"),
-  vatBase: document.getElementById("vat-base"),
   gbpPln: document.getElementById("gbp-pln"),
   gbpEur: document.getElementById("gbp-eur"),
 };
@@ -53,9 +52,10 @@ function calculate() {
   const participants = Math.max(1, Math.round(numeric(fields.participants, 1)));
   const duration = numeric(fields.duration);
   const hourlyRate = numeric(fields.hourlyRate);
-  const platformFeeRate = numeric(fields.platformFee) / 100;
-  const vatRate = numeric(fields.vatRate) / 100;
-  const reserveRate = numeric(fields.reserveRate) / 100;
+  const platformFeeRate = 0.333;
+  const includeVat = fields.includeVat.checked;
+  const includeReserve = fields.includeReserve.checked;
+  const reserveRate = includeReserve ? numeric(fields.reserveRate) / 100 : 0;
   const gbpPln = numeric(fields.gbpPln, defaults.gbpPln);
   const gbpEur = numeric(fields.gbpEur, defaults.gbpEur);
 
@@ -63,14 +63,13 @@ function calculate() {
   const participantRewards = participants * perPerson;
   const platformFee = participantRewards * platformFeeRate;
   const netCost = participantRewards + platformFee;
-  const vatBase = fields.vatBase.value === "total" ? netCost : platformFee;
-  const vat = vatBase * vatRate;
+  const vat = includeVat ? netCost * 0.23 : 0;
   const total = netCost + vat;
   const totalPln = total * gbpPln;
   const totalEur = total * gbpEur;
   const reservePln = totalPln * (1 + reserveRate);
 
-  latestCalculation = { participants, duration, hourlyRate, perPerson, participantRewards, platformFee, vat, total, totalPln, totalEur, reservePln, reserveRate };
+  latestCalculation = { participants, duration, hourlyRate, perPerson, participantRewards, platformFee, vat, total, totalPln, totalEur, reservePln, reserveRate, includeVat, includeReserve };
   output.totalGbp.textContent = plainNumber.format(total);
   output.totalPln.textContent = money.PLN.format(totalPln);
   output.totalEur.textContent = money.EUR.format(totalEur);
@@ -80,9 +79,10 @@ function calculate() {
   output.perPerson.textContent = money.GBP.format(perPerson);
   output.reservePln.textContent = money.PLN.format(reservePln);
   output.reserveLabel.textContent = `${plainNumber.format(reserveRate * 100).replace(",00", "")}%`;
-  output.totalCaption.textContent = fields.vatBase.value === "total"
-    ? "Z VAT naliczonym od całego kosztu, jak w arkuszu"
-    : "Z VAT naliczonym od opłaty platformowej";
+  output.totalCaption.textContent = includeVat ? "Z doliczonym VAT 23%" : "Bez VAT";
+  document.getElementById("hourly-rate-value").textContent = `£${plainNumber.format(hourlyRate).replace(",00", "")}/h`;
+  document.getElementById("reserve-field").classList.toggle("hidden", !includeReserve);
+  document.getElementById("reserve-card").classList.toggle("hidden", !includeReserve);
 
   const guidance = document.getElementById("rate-guidance");
   guidance.textContent = hourlyRate < 6
@@ -95,19 +95,24 @@ function calculate() {
 }
 
 function saveState() {
-  const state = Object.fromEntries(Object.entries(fields).map(([key, field]) => [key, field.value]));
-  localStorage.setItem("prolific-calculator", JSON.stringify(state));
+  const state = Object.fromEntries(Object.entries(fields).map(([key, field]) => [
+    key,
+    field.type === "checkbox" ? field.checked : field.value,
+  ]));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function restoreState() {
   try {
-    const state = JSON.parse(localStorage.getItem("prolific-calculator"));
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (!state) return;
     Object.entries(state).forEach(([key, value]) => {
-      if (fields[key] && value !== "") fields[key].value = value;
+      if (!fields[key] || value === "") return;
+      if (fields[key].type === "checkbox") fields[key].checked = Boolean(value);
+      else fields[key].value = value;
     });
   } catch (_) {
-    localStorage.removeItem("prolific-calculator");
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 
@@ -147,11 +152,10 @@ function resetCalculator() {
   fields.participants.value = defaults.participants;
   fields.duration.value = defaults.duration;
   fields.hourlyRate.value = defaults.hourlyRate;
-  fields.platformFee.value = defaults.platformFee;
-  fields.vatRate.value = defaults.vatRate;
+  fields.includeVat.checked = defaults.includeVat;
+  fields.includeReserve.checked = defaults.includeReserve;
   fields.reserveRate.value = defaults.reserveRate;
-  fields.vatBase.value = defaults.vatBase;
-  localStorage.removeItem("prolific-calculator");
+  localStorage.removeItem(STORAGE_KEY);
   refreshRates();
 }
 
@@ -165,11 +169,11 @@ async function copySummary() {
     `Stawka: ${money.GBP.format(c.hourlyRate)}/h`,
     `Wynagrodzenia: ${money.GBP.format(c.participantRewards)}`,
     `Opłata Prolific: ${money.GBP.format(c.platformFee)}`,
-    `VAT: ${money.GBP.format(c.vat)}`,
+    `VAT: ${c.includeVat ? money.GBP.format(c.vat) : "nie doliczono"}`,
     `Razem: ${money.GBP.format(c.total)} / ${money.PLN.format(c.totalPln)} / ${money.EUR.format(c.totalEur)}`,
-    `Budżet z rezerwą: ${money.PLN.format(c.reservePln)}`,
-  ].join("\n");
-  await navigator.clipboard.writeText(summary);
+  ];
+  if (c.includeReserve) summary.push(`Budżet z rezerwą ${plainNumber.format(c.reserveRate * 100)}%: ${money.PLN.format(c.reservePln)}`);
+  await navigator.clipboard.writeText(summary.join("\n"));
   const button = document.getElementById("copy-summary");
   button.textContent = "Skopiowano";
   window.setTimeout(() => { button.textContent = "Kopiuj podsumowanie"; }, 1800);
