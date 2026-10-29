@@ -1,0 +1,34 @@
+name: Deploy fakeNewsBadanie to FTP
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "fakeNewsBadanie/**"
+      - ".github/workflows/deploy-fakenewsbadanie.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-fakenewsbadanie-ftp
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Upload fakeNewsBadanie website
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          local-dir: ./fakeNewsBadanie/
+          server-dir: ./fakeNewsBadanie/
