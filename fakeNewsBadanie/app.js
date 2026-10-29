@@ -246,6 +246,10 @@
   }
 
   function showAdvice(text) {
+    // na wąskich ekranach panel AI jest pod telefonem – przewiń do niego
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      document.querySelector(".ai-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     el.aiIdle.hidden = true;
     el.aiThinking.hidden = false;
     const think = TIMING.thinkMin + Math.random() * (TIMING.thinkMax - TIMING.thinkMin);
