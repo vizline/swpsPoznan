@@ -641,7 +641,7 @@
   const urlCond = (params.get("cond") || "").toLowerCase();
   if (urlCond === "self" || urlCond === "neutral") {
     setCondition(urlCond, "url");
-  } else if (S.settings.conditionMode === "random") {
+  } else if (urlCond === "random" || S.settings.conditionMode === "random") {
     setCondition(randInt(2) === 0 ? "self" : "neutral", "random");
   }
 
