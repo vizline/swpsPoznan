@@ -16,6 +16,11 @@ window.STUDY = {
     minReadingSeconds: 40,      // article: "Next" is enabled only after this time AND scrolling to the end
     autoAdvanceMs: 350,         // CSS-12: delay before moving to the next item after an answer
 
+    // "crop"    -> the YouTube videos are vertical recordings uploaded as 16:9 (with side stripes):
+    //              show only the central part, filling the whole phone screen
+    // "contain"  -> show the whole YouTube frame (black bars above/below)
+    youtubeFit: "crop",
+
     // Each video is either { youtube: "VIDEO_ID" } (embedded YouTube player)
     // or a path to an own .mp4 file, e.g. "media/self1.mp4" (fully preloaded before play).
     videos: {

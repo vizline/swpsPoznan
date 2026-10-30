@@ -251,7 +251,7 @@
   /* --- backend 1: YouTube embed (privacy-enhanced mode), no controls --- */
   function ytVideo(c, info, src) {
     info.source = "youtube"; info.youtubeId = src.youtube;
-    const holder = el("div", { class: "yt-holder" }, el("div"));
+    const holder = el("div", { class: "yt-holder" + (S.settings.youtubeFit === "crop" ? " crop" : "") }, el("div"));
     const shield = el("div", { class: "shield" });           // blocks clicks/hover on the YouTube player
     shield.addEventListener("contextmenu", e => e.preventDefault());
     c.screen.prepend(holder, shield);

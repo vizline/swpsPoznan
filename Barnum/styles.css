@@ -202,7 +202,11 @@ textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3
   z-index: 1;
 }
 .screen video { width: 100%; height: 100%; object-fit: contain; display: block; background: #000; pointer-events: none; }
-.yt-holder, .yt-holder iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.yt-holder { position: absolute; inset: 0; width: 100%; height: 100%; }
+.yt-holder iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+/* vertical recording uploaded as a 16:9 video (white side stripes): make the 16:9 player as tall as the screen
+   and centre it, so only the middle 9:16 part is visible and fills the phone screen */
+.yt-holder.crop { inset: 0 auto; left: 50%; height: 100%; width: auto; aspect-ratio: 16 / 9; transform: translateX(-50%); }
 .shield { position: absolute; inset: 0; z-index: 1; background: transparent; }
 .overlay.solid { background: #0b0f13; }
 
