@@ -34,15 +34,15 @@ body {
   backdrop-filter: blur(6px);
   padding: 10px 16px 0;
 }
-.brand { display: block; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 600; max-width: 912px; margin: 0 auto 8px; }
-.progress { height: 3px; background: var(--line); max-width: 912px; margin: 0 auto; border-radius: 2px; overflow: hidden; }
+.brand { display: block; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 600; max-width: 1030px; margin: 0 auto 8px; }
+.progress { height: 3px; background: var(--line); max-width: 1030px; margin: 0 auto; border-radius: 2px; overflow: hidden; }
 .progress-fill { height: 100%; width: 0; background: var(--accent); transition: width .4s ease; }
 
 main, main:focus, main:focus-visible { outline: none; }
 
 /* ---------- generic text page ---------- */
 .page {
-  max-width: 912px;
+  max-width: 1062px;   /* card ≈ 1030 px */
   margin: 20px auto 48px;
   padding: 0 16px;
   animation: fade .35s ease;
@@ -280,6 +280,8 @@ textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3
 .debug-json { white-space: pre-wrap; font: 12px/1.45 ui-monospace, Menlo, monospace; background: #20262b; color: #d9e2e8; padding: 16px; border-radius: 10px; margin-top: 24px; max-height: 60vh; overflow: auto; }
 .debug-skip { position: fixed; right: 12px; bottom: 12px; z-index: 50; font: 600 12px var(--sans); background: #9b2c2c; color: #fff; border: 0; border-radius: 6px; padding: 8px 10px; cursor: pointer; }
 
+.gate .card { text-align: left; }
+.gate-icon { font-size: 40px; line-height: 1; margin-bottom: 14px; }
 .noscript { max-width: 600px; margin: 40px auto; padding: 0 16px; }
 
 @media (max-width: 520px) {

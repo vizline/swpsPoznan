@@ -690,5 +690,36 @@
     setCondition(randInt(2) === 0 ? "self" : "neutral", "random");
   }
 
-  next();
+  /* ---------- device check: desktops/laptops only ---------- */
+  function isMobileDevice() {
+    if (navigator.userAgentData && navigator.userAgentData.mobile) return true;
+    const ua = navigator.userAgent || "";
+    if (/Android|iPhone|iPad|iPod|Mobile|Silk|Kindle|BlackBerry|Opera Mini|IEMobile/i.test(ua)) return true;
+    if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return true;   // iPadOS presents itself as a Mac
+    return false;
+  }
+  const wideEnough = () => window.innerWidth >= (S.settings.minWindowWidth || 0);
+
+  function deviceGate(kind) {
+    const G = S.deviceGate[kind];
+    app.innerHTML = "";
+    const page = textPage(G.title, G.html);
+    page.section.classList.add("gate");
+    page.card.prepend(el("div", { class: "gate-icon", text: "💻", "aria-hidden": "true" }));
+    D.deviceBlocked = kind;
+  }
+
+  if (params.get("device") === "any") {
+    next();
+  } else if (isMobileDevice()) {
+    deviceGate("mobile");
+  } else if (!wideEnough()) {
+    deviceGate("narrow");
+    const onResize = () => {
+      if (wideEnough()) { window.removeEventListener("resize", onResize); delete D.deviceBlocked; next(); }
+    };
+    window.addEventListener("resize", onResize);
+  } else {
+    next();
+  }
 })();

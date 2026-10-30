@@ -13,6 +13,10 @@ window.STUDY = {
     // The URL parameter ?cond=self or ?cond=neutral always overrides this.
     conditionMode: "manual",
 
+    // Desktop/laptop only: phones and tablets are blocked, and so are browser windows narrower than this
+    // (checked once, before the consent page). Add ?device=any to the link to bypass the check when piloting.
+    minWindowWidth: 1000,
+
     minReadingSeconds: 40,      // article: "Next" is enabled only after this time AND scrolling to the end
     autoAdvanceMs: 350,         // CSS-12: delay before moving to the next item after an answer
 
@@ -27,6 +31,24 @@ window.STUDY = {
       self:    { v1: "media/self1.mp4",    v2: "media/self2.mp4" },
       neutral: { v1: "media/neutral1.mp4", v2: "media/neutral2.mp4" }
       // YouTube versions (not used): self1 hhLIEpmyS28, self2 ysQmtyF7nVw, neutral1 usnwD11TUJs, neutral2 Dtxlf9Pl_0o
+    }
+  },
+
+  /* ---------- 0. device check (shown instead of the consent page) ---------- */
+  deviceGate: {
+    mobile: {
+      title: "Please use a computer",
+      html: `
+        <p class="lead">This study can be completed only on a <strong>desktop computer or laptop</strong>.</p>
+        <p>It looks like you are using a phone or a tablet. Please open the study link on a computer. Thank you!</p>
+      `
+    },
+    narrow: {
+      title: "Please enlarge your browser window",
+      html: `
+        <p class="lead">This study can be completed only on a <strong>desktop computer or laptop</strong>, in a sufficiently large browser window.</p>
+        <p>Your browser window is currently too narrow. Please maximise it – the study will start automatically as soon as the window is large enough.</p>
+      `
     }
   },
 
