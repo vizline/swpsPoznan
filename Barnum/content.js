@@ -80,6 +80,17 @@ window.STUDY = {
     `
   },
 
+  /* ---------- 3a. screen before the article (shown for `seconds`, then moves on automatically) ---------- */
+  articleIntro: {
+    title: "Next: a short article",
+    seconds: 10,
+    // {seconds} is replaced with settings.minReadingSeconds
+    html: `
+      <p class="lead">On the next screen you will see a short article on a tablet.</p>
+      <p>Please read it <strong>carefully</strong>, from beginning to end. You will be able to continue after <strong>{seconds} seconds</strong> – the “Next” button shows how much time is left.</p>
+    `
+  },
+
   /* ---------- 3. article texts ---------- */
   article: {
     title: "An ordinary week",

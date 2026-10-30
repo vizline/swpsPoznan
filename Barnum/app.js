@@ -105,6 +105,7 @@
     instructionPage,
     () => videoPage("video1", "v1", 1),
     () => selfIdPage("video1", "video", "After video 1"),
+    articleIntroPage,
     articlePage,
     () => selfIdPage("article", "article", "After the article"),
     () => videoPage("video2", "v2", 2),
@@ -134,7 +135,7 @@
     steps[stepIdx]();
     app.focus({ preventScroll: true });
   }
-  const stepKeys = ["consent", "instruction", "video1", "q_video1", "article", "q_article", "video2", "q_video2",
+  const stepKeys = ["consent", "instruction", "video1", "q_video1", "articleIntro", "article", "q_article", "video2", "q_video2",
                     "stateIntro", "stateItems", "cssIntro", "cssItems", "suspicion", "debrief", "thanks"];
   const stepKey = i => stepKeys[i] || "step" + i;
 
@@ -371,6 +372,25 @@
     video.addEventListener("ended", () => { ended = true; c.showEnded(); });
   }
 
+  function articleIntroPage() {
+    const I = S.articleIntro;
+    const page = textPage(I.title, I.html.replace(/\{seconds\}/g, S.settings.minReadingSeconds));
+    const note = el("p", { class: "auto-note" });
+    const bar = el("div", { class: "auto-bar" }, el("div"));
+    page.card.append(bar, note);
+    const t0 = performance.now(), total = I.seconds * 1000;
+    const tick = () => {
+      const elapsed = performance.now() - t0;
+      bar.firstChild.style.width = Math.min(100, elapsed / total * 100) + "%";
+      note.textContent = `The article will appear in ${Math.max(0, Math.ceil((total - elapsed) / 1000))} s`;
+      if (elapsed >= total) { clearInterval(timer); next(); }
+    };
+    const timer = setInterval(tick, 200);
+    tick();
+    cleanup = () => clearInterval(timer);
+    if (DEBUG) debugSkip(() => next());
+  }
+
   function articlePage() {
     const A = S.article;
     const paras = A[D.condition];
@@ -404,7 +424,8 @@
 
     let timeOk = false, scrollOk = false;
     const check = () => {
-      if (timeOk && scrollOk && nextBtn.disabled) { nextBtn.disabled = false; hint.textContent = ""; }
+      if (timeOk && scrollOk && nextBtn.disabled) { nextBtn.disabled = false; nextBtn.classList.add("reveal"); hint.textContent = ""; }
+      else if (timeOk && !scrollOk) hint.textContent = "Please scroll down inside the tablet to the end of the article to continue.";
     };
     const atEnd = () => scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 12;
     const onScroll = () => {
@@ -412,8 +433,23 @@
     };
     scroller.addEventListener("scroll", onScroll, { passive: true });
     requestAnimationFrame(onScroll); // text may fit without scrolling
-    const timer = setTimeout(() => { timeOk = true; check(); }, S.settings.minReadingSeconds * 1000);
-    cleanup = () => clearTimeout(timer);
+    // visible countdown on the Next button
+    const total = S.settings.minReadingSeconds * 1000;
+    nextBtn.classList.add("counting");
+    const tick = () => {
+      const elapsed = performance.now() - t0;
+      const left = Math.max(0, Math.ceil((total - elapsed) / 1000));
+      nextBtn.style.setProperty("--p", Math.min(100, elapsed / total * 100) + "%");
+      if (elapsed >= total) {
+        clearInterval(timer);
+        nextBtn.classList.remove("counting");
+        nextBtn.textContent = "Next";
+        timeOk = true; check();
+      } else nextBtn.textContent = `Next in ${left} s`;
+    };
+    const timer = setInterval(tick, 200);
+    tick();
+    cleanup = () => clearInterval(timer);
 
     if (DEBUG) debugSkip(() => { info.skippedInDebug = true; next(); });
   }

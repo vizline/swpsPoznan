@@ -34,15 +34,15 @@ body {
   backdrop-filter: blur(6px);
   padding: 10px 16px 0;
 }
-.brand { display: block; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 600; max-width: 760px; margin: 0 auto 8px; }
-.progress { height: 3px; background: var(--line); max-width: 760px; margin: 0 auto; border-radius: 2px; overflow: hidden; }
+.brand { display: block; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 600; max-width: 912px; margin: 0 auto 8px; }
+.progress { height: 3px; background: var(--line); max-width: 912px; margin: 0 auto; border-radius: 2px; overflow: hidden; }
 .progress-fill { height: 100%; width: 0; background: var(--accent); transition: width .4s ease; }
 
 main, main:focus, main:focus-visible { outline: none; }
 
 /* ---------- generic text page ---------- */
 .page {
-  max-width: 760px;
+  max-width: 912px;
   margin: 20px auto 48px;
   padding: 0 16px;
   animation: fade .35s ease;
@@ -88,6 +88,15 @@ a { color: var(--accent); }
 .btn.ghost:hover:not(:disabled) { background: transparent; color: var(--ink); }
 .btn.hidden { visibility: hidden; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* countdown button: fills from left to right, then becomes the normal Next button */
+.btn.counting, .btn.counting:disabled {
+  opacity: 1; cursor: default; min-width: 170px; color: #fff;
+  background: linear-gradient(90deg, #6f97a6 var(--p, 0%), #b9cbd2 var(--p, 0%));
+  font-variant-numeric: tabular-nums;
+}
+.auto-bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 26px; }
+.auto-bar div { height: 100%; width: 0; background: var(--accent); transition: width .2s linear; }
+.auto-note { margin-top: 10px; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
 
 .consent-check {
   display: flex; gap: 14px; align-items: flex-start;
