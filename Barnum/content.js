@@ -123,24 +123,24 @@ window.STUDY = {
     ]
   },
 
-  /* ---------- 5. state ADHD symptoms (slider 0–100, random order) ---------- */
-  stateAdhd: {
-    title: "How do you feel right now?",
+  /* ---------- 5. ADHD-related symptoms in general (slider 0–100, random order) ---------- */
+  adhd: {
+    title: "How do you usually feel?",
     intro: `
       <p class="lead">Below are statements about how people may feel or behave.</p>
-      <p>For each one, use the slider to show how much it applies to you <strong>right now, at this very moment</strong> – not how you usually feel. There are no right or wrong answers.</p>
+      <p>For each one, use the slider to show how much it applies to you <strong>in general</strong> – how you usually feel and behave in your everyday life. There are no right or wrong answers.</p>
     `,
-    prompt: "How much does this apply to you right now?",
+    prompt: "How much does this apply to you in general?",
     left: "Not at all",
     right: "Very much",
     items: [
-      { id: "sa1", text: "I find it hard to concentrate." },
-      { id: "sa2", text: "I feel easily distracted." },
-      { id: "sa3", text: "My mind feels disorganised and forgetful." },
-      { id: "sa4", text: "I feel tension in my body." },
-      { id: "sa5", text: "I feel an inner need for immediate movement." },
-      { id: "sa6", text: "I feel impatient and find it hard to wait." },
-      { id: "sa7", text: "I feel an urge to do things right away, without thinking them through." }
+      { id: "adhd1", text: "I find it hard to concentrate." },
+      { id: "adhd2", text: "I feel easily distracted." },
+      { id: "adhd3", text: "My mind feels disorganised and forgetful." },
+      { id: "adhd4", text: "I feel tension in my body." },
+      { id: "adhd5", text: "I feel an inner need for immediate movement." },
+      { id: "adhd6", text: "I feel impatient and find it hard to wait." },
+      { id: "adhd7", text: "I feel an urge to do things right away, without thinking them through." }
     ]
   },
 

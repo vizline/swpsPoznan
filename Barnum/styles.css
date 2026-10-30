@@ -165,10 +165,11 @@ a { color: var(--accent); }
   min-height: 72px;
 }
 .likert button .n { font-size: 19px; font-weight: 700; }
-.likert button .l { font-size: 12.5px; color: var(--muted); line-height: 1.2; text-align: center; }
+.likert button { justify-content: center; min-height: 58px; }
+.likert button .l { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.2; text-align: center; }
 .likert button:hover { border-color: #a9b8bf; }
 .likert button.selected { border-color: var(--accent); background: var(--accent); color: #fff; }
-.likert button.selected .l { color: #e4f0f4; }
+.likert button.selected .l { color: #fff; }
 .likert button:active { transform: scale(.97); }
 
 textarea {
@@ -287,7 +288,7 @@ textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3
   .card { padding: 24px 18px; }
   .likert { gap: 5px; }
   .likert button { padding: 10px 2px 8px; }
-  .likert button .l { font-size: 11px; }
+  .likert button .l { font-size: 12px; }
   .actions .btn:not(.ghost) { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) {

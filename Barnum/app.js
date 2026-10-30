@@ -1,7 +1,7 @@
 /* =====================================================================
    BARNUM / ADHD STUDY — study logic
    Flow: consent → instruction (+condition) → video 1 → Q → article → Q
-         → video 2 → Q → state ADHD (slider carousel) → CSS-12 (carousel)
+         → video 2 → Q → ADHD symptoms in general (sliders) → CSS-12 (carousel)
          → suspicion probe → debriefing → thank you
    Responses are collected in the object `D` (not saved anywhere yet).
    Add ?debug=1 to the URL to get skip buttons and to see the data at the end.
@@ -28,7 +28,7 @@
     timings: {},                 // ms spent on each page
     media: {},                   // video playback / reading info
     selfId: {},                  // video1, article, video2  (1–5)
-    stateAdhd: {}, stateAdhdOrder: [],
+    adhd: {}, adhdOrder: [],
     css12: {}, css12Order: [],
     suspicion: null,
     withdraw: false,
@@ -110,8 +110,8 @@
     () => selfIdPage("article", "article", "After the article"),
     () => videoPage("video2", "v2", 2),
     () => selfIdPage("video2", "video", "After video 2"),
-    stateIntroPage,
-    stateCarousel,
+    adhdIntroPage,
+    adhdCarousel,
     cssIntroPage,
     cssCarousel,
     suspicionPage,
@@ -136,7 +136,7 @@
     app.focus({ preventScroll: true });
   }
   const stepKeys = ["consent", "instruction", "video1", "q_video1", "articleIntro", "article", "q_article", "video2", "q_video2",
-                    "stateIntro", "stateItems", "cssIntro", "cssItems", "suspicion", "debrief", "thanks"];
+                    "adhdIntro", "adhdItems", "cssIntro", "cssItems", "suspicion", "debrief", "thanks"];
   const stepKey = i => stepKeys[i] || "step" + i;
 
   window.addEventListener("beforeunload", e => {
@@ -463,30 +463,30 @@
     page.card.append(el("div", { class: "actions" }, btn));
   }
 
-  function stateIntroPage() {
-    const page = textPage(S.stateAdhd.title, S.stateAdhd.intro);
+  function adhdIntroPage() {
+    const page = textPage(S.adhd.title, S.adhd.intro);
     page.card.append(el("div", { class: "actions" }, button("Start", () => next())));
   }
 
-  function stateCarousel() {
-    const items = shuffle(S.stateAdhd.items.slice());
-    D.stateAdhdOrder = items.map(i => i.id);
+  function adhdCarousel() {
+    const items = shuffle(S.adhd.items.slice());
+    D.adhdOrder = items.map(i => i.id);
     carousel({
       items,
-      answers: D.stateAdhd,
+      answers: D.adhd,
       renderAnswer(item, slot, onAnswer) {
         const wrap = el("div", { class: "slider-wrap" });
-        const has = D.stateAdhd[item.id] != null;
-        const r = el("input", { type: "range", min: "0", max: "100", step: "1", value: has ? D.stateAdhd[item.id] : 50,
-                                class: "vas" + (has ? "" : " untouched"), "aria-label": item.text + " (0 = " + S.stateAdhd.left + ", 100 = " + S.stateAdhd.right + ")" });
+        const has = D.adhd[item.id] != null;
+        const r = el("input", { type: "range", min: "0", max: "100", step: "1", value: has ? D.adhd[item.id] : 50,
+                                class: "vas" + (has ? "" : " untouched"), "aria-label": item.text + " (0 = " + S.adhd.left + ", 100 = " + S.adhd.right + ")" });
         const mark = () => { r.classList.remove("untouched"); onAnswer(Number(r.value), false); };
         ["input", "change", "pointerup"].forEach(ev => r.addEventListener(ev, mark));
         r.addEventListener("keydown", e => { if (/Arrow|Home|End|Page/.test(e.key)) setTimeout(mark, 0); });
-        wrap.append(r, el("div", { class: "vas-labels" }, el("span", { text: "← " + S.stateAdhd.left }), el("span", { text: S.stateAdhd.right + " →" })));
+        wrap.append(r, el("div", { class: "vas-labels" }, el("span", { text: "← " + S.adhd.left }), el("span", { text: S.adhd.right + " →" })));
         slot.append(wrap, el("div", { class: "hint", text: has ? "" : "Tap or drag on the line to answer." }));
         r.addEventListener("input", () => { const h = slot.querySelector(".hint"); if (h) h.textContent = ""; }, { once: true });
       },
-      prompt: S.stateAdhd.prompt,
+      prompt: S.adhd.prompt,
       onDone: next
     });
   }
@@ -507,7 +507,7 @@
         S.css12.scale.forEach(o => {
           const b = el("button", { type: "button", role: "radio", "aria-checked": String(D.css12[item.id] === o.value),
                                    class: D.css12[item.id] === o.value ? "selected" : "" },
-                       el("span", { class: "n", text: o.value }), el("span", { class: "l", text: o.label }));
+                       el("span", { class: "l", text: o.label }));
           b.addEventListener("click", () => {
             row.querySelectorAll("button").forEach(x => { x.classList.remove("selected"); x.setAttribute("aria-checked", "false"); });
             b.classList.add("selected"); b.setAttribute("aria-checked", "true");
