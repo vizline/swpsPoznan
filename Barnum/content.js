@@ -24,8 +24,9 @@ window.STUDY = {
     // Each video is either { youtube: "VIDEO_ID" } (embedded YouTube player)
     // or a path to an own .mp4 file, e.g. "media/self1.mp4" (fully preloaded before play).
     videos: {
-      self:    { v1: { youtube: "hhLIEpmyS28" }, v2: { youtube: "ysQmtyF7nVw" } },
-      neutral: { v1: { youtube: "usnwD11TUJs" }, v2: { youtube: "Dtxlf9Pl_0o" } }
+      self:    { v1: "media/self1.mp4",    v2: "media/self2.mp4" },
+      neutral: { v1: "media/neutral1.mp4", v2: "media/neutral2.mp4" }
+      // YouTube versions (not used): self1 hhLIEpmyS28, self2 ysQmtyF7nVw, neutral1 usnwD11TUJs, neutral2 Dtxlf9Pl_0o
     }
   },
 
@@ -52,7 +53,7 @@ window.STUDY = {
       <p>The risks are minimal and do not exceed those of everyday life. The materials describe difficulties commonly associated with ADHD, and some people may find themselves reflecting on their own concentration or organisation. The materials are not a diagnostic tool. There are no direct benefits for you, but your participation will help us understand how people respond to health information in the media.</p>
 
       <h3>How will my data be used?</h3>
-      <p>We do not ask for your name, e-mail address or any other information that could identify you. Your responses are anonymous and will be used for scientific purposes only. Results will be reported in aggregated form, and the anonymised dataset may be made available in an open-science repository (e.g., OSF). The videos are shown through YouTube’s embedded player in privacy-enhanced mode; as with any online video, YouTube may process technical data such as your IP address.</p>
+      <p>We do not ask for your name, e-mail address or any other information that could identify you. Your responses are anonymous and will be used for scientific purposes only. Results will be reported in aggregated form, and the anonymised dataset may be made available in an open-science repository (e.g., OSF).</p>
 
       <h3>Ethical approval and contact</h3>
       <p>The study has been approved by the Research Ethics Committee of the Faculty of Psychology and Law, SWPS University in Poznań (decision no. <strong>[____]</strong>). If you have any questions, please contact dr Maciej Kościelniak: <a href="mailto:mkoscielniak@swps.edu.pl">mkoscielniak@swps.edu.pl</a>.</p>
