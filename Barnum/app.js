@@ -37,12 +37,6 @@
   window.studyData = D; // handy for piloting from the console
 
   /* ---------- condition ---------- */
-  const urlCond = (params.get("cond") || "").toLowerCase();
-  if (urlCond === "self" || urlCond === "neutral") {
-    setCondition(urlCond, "url");
-  } else if (S.settings.conditionMode === "random") {
-    setCondition(randInt(2) === 0 ? "self" : "neutral", "random");
-  }
 
   function setCondition(c, how) {
     D.condition = c;
@@ -641,6 +635,14 @@
   }
   function makeId() {
     return Date.now().toString(36) + "-" + Array.from({ length: 6 }, () => "abcdefghijklmnopqrstuvwxyz0123456789"[randInt(36)]).join("");
+  }
+
+  /* ---------- start: assign condition (URL / random) only after everything is defined ---------- */
+  const urlCond = (params.get("cond") || "").toLowerCase();
+  if (urlCond === "self" || urlCond === "neutral") {
+    setCondition(urlCond, "url");
+  } else if (S.settings.conditionMode === "random") {
+    setCondition(randInt(2) === 0 ? "self" : "neutral", "random");
   }
 
   next();
