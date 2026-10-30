@@ -178,8 +178,8 @@ window.STUDY = {
   suspicion: {
     title: "One last question",
     question: "What do you think this study was about? Please describe in a sentence or two what you think its aim was.",
-    placeholder: "Type your answer here…",
-    minChars: 5
+    note: "Optional – if nothing comes to mind, just leave the field empty and click “Next”.",
+    placeholder: "Type your answer here…"
   },
 
   /* ---------- 8. debriefing (DRAFT) ---------- */

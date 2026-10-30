@@ -526,10 +526,9 @@
     const Q = S.suspicion;
     const page = textPage(Q.title, "");
     page.card.append(el("p", { class: "question", text: Q.question }));
+    if (Q.note) page.card.append(el("p", { class: "prompt", style: "margin:8px 0 0", text: Q.note }));
     const ta = el("textarea", { placeholder: Q.placeholder, "aria-label": Q.question, maxlength: "2000" });
-    const btn = button("Next", () => { D.suspicion = ta.value.trim(); next(); });
-    btn.disabled = true;
-    ta.addEventListener("input", () => { btn.disabled = ta.value.trim().length < Q.minChars; });
+    const btn = button("Next", () => { D.suspicion = ta.value.trim(); next(); });   // empty answer allowed ("")
     page.card.append(ta, el("div", { class: "actions" }, btn));
   }
 
