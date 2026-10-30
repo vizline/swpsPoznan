@@ -42,7 +42,7 @@
     D.condition = c;
     D.conditionAssignment = how;
     const v = S.settings.videos[c];
-    [v.v1, v.v2].forEach(src => { if (typeof src === "string") preload(src); else loadYouTubeApi(); });
+    [v.v1, v.v2].forEach(src => { if (typeof src === "string") preload(src); else loadYouTubeApi().catch(() => {}); });
   }
 
   /* ---------- YouTube IFrame API loader ---------- */
@@ -379,23 +379,28 @@
 
     const stage = el("section", { class: "stage" });
     stage.append(el("div", { class: "stage-label", text: "Short article" }));
-    const { phone, screen } = phoneShell();
+    const { phone, screen } = tabletShell();
     screen.classList.add("article");
     const scroller = el("div", { class: "article-scroll" });
-    scroller.append(
+    scroller.append(el("div", { class: "art-inner" },
       el("div", { class: "art-kicker", text: A.kicker }),
       el("h2", { class: "art-title", text: A.title }),
       el("div", { class: "art-meta", text: "1 min read" }),
       el("div", { class: "art-body" }, ...paras.map(p => el("p", { text: p }))),
       el("div", { class: "art-end", text: "• • •" })
-    );
-    screen.append(el("div", { class: "art-bar" }), scroller);
+    ));
+    screen.append(scroller);
     stage.append(phone);
     const nextBtn = button("Next", () => { info.readingMs = Math.round(performance.now() - t0); next(); });
     nextBtn.disabled = true;
-    const hint = el("div", { class: "hint", text: "Please read the whole article (scroll down inside the phone)." });
-    stage.append(el("div", { class: "actions" }, nextBtn), hint);
+    const hint = el("div", { class: "hint", text: "Please read the whole article." });
+    const rotateTip = el("div", { class: "hint rotate-tip", text: "Tip: turning your phone sideways makes the article easier to read." });
+    stage.append(el("div", { class: "actions" }, nextBtn), hint, rotateTip);
     app.append(stage);
+    requestAnimationFrame(() => {
+      if (scroller.scrollHeight > scroller.clientHeight + 12 && nextBtn.disabled)
+        hint.textContent = "Please read the whole article (scroll down inside the tablet).";
+    });
 
     let timeOk = false, scrollOk = false;
     const check = () => {
@@ -522,6 +527,13 @@
     section.append(card);
     app.append(section);
     return { section, card };
+  }
+
+  function tabletShell() {
+    const tablet = el("div", { class: "tablet" });
+    const screen = el("div", { class: "screen tablet-screen" });
+    tablet.append(screen, el("img", { class: "phone-frame", src: "tablet.png", alt: "", draggable: "false" }));
+    return { phone: tablet, screen };
   }
 
   function phoneShell() {
