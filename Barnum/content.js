@@ -53,7 +53,7 @@ window.STUDY = {
       <p>The risks are minimal and do not exceed those of everyday life. The materials describe difficulties commonly associated with ADHD, and some people may find themselves reflecting on their own concentration or organisation. The materials are not a diagnostic tool. There are no direct benefits for you, but your participation will help us understand how people respond to health information in the media.</p>
 
       <h3>How will my data be used?</h3>
-      <p>We do not ask for your name, e-mail address or any other information that could identify you. Your responses are anonymous and will be used for scientific purposes only. Results will be reported in aggregated form, and the anonymised dataset may be made available in an open-science repository (e.g., OSF).</p>
+      <p>We do not ask for your name, e-mail address or any other information that could identify you. Your responses are stored together with your Prolific ID only, which is needed to process your participation and any request to withdraw your data; the Prolific ID will be removed from the dataset before it is analysed or shared. Your responses will be used for scientific purposes only. Results will be reported in aggregated form, and the anonymised dataset may be made available in an open-science repository (e.g., OSF).</p>
 
       <h3>Ethical approval and contact</h3>
       <p>The study has been approved by the Research Ethics Committee of the Faculty of Psychology and Law, SWPS University in Poznań (decision no. <strong>[____]</strong>). If you have any questions, please contact dr Maciej Kościelniak: <a href="mailto:mkoscielniak@swps.edu.pl">mkoscielniak@swps.edu.pl</a>.</p>
@@ -199,10 +199,12 @@ window.STUDY = {
       <h3>Please keep it to yourself</h3>
       <p>Please do not share the details of this study with people who might take part in it – this would affect the results.</p>
 
+      <h3>Withdrawing your data</h3>
+      <p>Now that you know the real aim of the study, you may decide that you do not want your responses to be used. If so, please send a message to the researcher through <strong>Prolific’s messaging system</strong> and ask for your data to be deleted. Your responses are linked only to your Prolific ID, so we will be able to find and delete them.</p>
+
       <h3>Contact</h3>
-      <p>If you have any questions or comments, please contact dr Maciej Kościelniak: <a href="mailto:mkoscielniak@swps.edu.pl">mkoscielniak@swps.edu.pl</a>.</p>
+      <p>If you have any questions or comments, please contact the researcher, dr Maciej Kościelniak, through Prolific’s messaging system or by e-mail: <a href="mailto:mkoscielniak@swps.edu.pl">mkoscielniak@swps.edu.pl</a>.</p>
     `,
-    withdraw: "Now that I know the real aim of the study, I do <strong>not</strong> want my responses to be used in the analysis.",
     finishButton: "Finish"
   },
 

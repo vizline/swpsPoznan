@@ -20,6 +20,9 @@
     sessionId: makeId(),
     startedAt: new Date().toISOString(),
     urlParams: Object.fromEntries(params.entries()),
+    prolificPid: params.get("PROLIFIC_PID") || null,   // added to the link by Prolific
+    prolificStudyId: params.get("STUDY_ID") || null,
+    prolificSessionId: params.get("SESSION_ID") || null,
     userAgent: navigator.userAgent,
     viewport: { w: window.innerWidth, h: window.innerHeight },
     condition: null,
@@ -31,7 +34,6 @@
     adhd: {}, adhdOrder: [],
     css12: {}, css12Order: [],
     suspicion: null,
-    withdraw: false,
     finishedAt: null
   };
   window.studyData = D; // handy for piloting from the console
@@ -535,11 +537,7 @@
   function debriefPage() {
     const B = S.debrief;
     const page = textPage(B.title, B.html);
-    const lab = el("label", { class: "withdraw" });
-    const cb = el("input", { type: "checkbox" });
-    cb.addEventListener("change", () => { D.withdraw = cb.checked; });
-    lab.append(cb, el("span", { html: B.withdraw }));
-    page.card.append(lab, el("div", { class: "actions" }, button(B.finishButton, () => {
+    page.card.append(el("div", { class: "actions" }, button(B.finishButton, () => {
       D.finishedAt = new Date().toISOString();
       next();
     })));
