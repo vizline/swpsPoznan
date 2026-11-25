@@ -135,8 +135,8 @@
           <div class="item-progress" aria-hidden="true"><div class="item-progress-fill" id="qbar"></div></div>
         </div>
         <div class="opts${binary ? " binary" : ""}" style="--n:${Q.scale.length}" role="radiogroup">
-          ${Q.scale.map(([v, l], k) => `<button type="button" class="opt" data-v="${v}" role="radio" aria-checked="false">
-              ${binary ? "" : `<span class="num">${k + 1}</span>`}<span>${g(l)}</span></button>`).join("")}
+          ${Q.scale.map(([v, l]) => `<button type="button" class="opt" data-v="${v}" role="radio" aria-checked="false">
+              <span>${g(l)}</span></button>`).join("")}
         </div>
         <div class="actions split">
           <button class="btn ghost" id="back">← Wstecz</button>
