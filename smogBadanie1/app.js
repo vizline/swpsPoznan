@@ -50,21 +50,12 @@
   /* ---------- postęp ---------- */
   const ORDER_Q = shuffle(Object.keys(C.questionnaires));
   D.kolejnosc_kwest = ORDER_Q.join(",");
-  const totalSteps = 2 + ORDER_Q.reduce((s, k) => s + C.questionnaires[k].items.length + 1, 0);
+  const totalSteps = 1 + ORDER_Q.reduce((s, k) => s + C.questionnaires[k].items.length + 1, 0);
   let step = 0;
   const tick = () => { step++; bar.style.width = Math.min(100, 100 * step / totalSteps) + "%"; };
 
-  /* ================= 1. ZGODA ================= */
-  function showConsent() {
-    render(C.consent(esc(CFG.OPINIA_NR)) + `
-      <div class="actions"><button class="btn" id="go">Rozpocznij badanie</button></div>`);
-    const t = performance.now();
-    document.getElementById("go").onclick = () => {
-      D.t_zgoda = sec(performance.now() - t);
-      tick();
-      showDemographics();
-    };
-  }
+  /* ================= 1. ZGODA – wyświetlana na Prolific, nie tutaj =================
+     (treść pozostaje w content.js jako C.consent na wypadek potrzeby) */
 
   /* ================= 2. DEMOGRAFIA ================= */
   function showDemographics() {
@@ -129,56 +120,98 @@
       D["t_" + Q.code + "_instr"] = sec(performance.now() - tInstr);
       tick();
       tItems0 = performance.now();
-      showItem(0);
+      buildCarousel();
     };
 
-    function showItem(i) {
-      const [n, text] = items[i];
-      const isAttn = n === "attn";
-      const cur = answers[n];
+    /* Karuzela: układ budowany raz; przy każdej pozycji zmienia się tylko treść ramki,
+       pasek postępu w ramce i zaznaczenie odpowiedzi. */
+    function buildCarousel() {
       const prompt = g(Q.prompt);
       render(`
-        <div class="q-head"><span class="q-title">${g(Q.title)}</span><span class="q-count">${i + 1} / ${items.length}</span></div>
+        <div class="q-head"><span class="q-title">${g(Q.title)}</span><span class="q-count" id="qcount"></span></div>
         ${prompt ? `<p class="q-prompt">${prompt}</p>` : ""}
-        <p class="q-item${isAttn ? " attn" : ""}">${g(text)}</p>
+        <div class="item-frame">
+          <p class="q-item" id="qitem" aria-live="polite"></p>
+          <div class="item-progress" aria-hidden="true"><div class="item-progress-fill" id="qbar"></div></div>
+        </div>
         <div class="opts${binary ? " binary" : ""}" style="--n:${Q.scale.length}" role="radiogroup">
-          ${Q.scale.map(([v, l], k) => `<button type="button" class="opt${cur === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${cur === v}">
+          ${Q.scale.map(([v, l], k) => `<button type="button" class="opt" data-v="${v}" role="radio" aria-checked="false">
               ${binary ? "" : `<span class="num">${k + 1}</span>`}<span>${g(l)}</span></button>`).join("")}
         </div>
         <div class="actions split">
           <button class="btn ghost" id="back">← Wstecz</button>
-          ${cur !== undefined ? `<button class="btn" id="next">Dalej</button>` : `<span></span>`}
+          <button class="btn" id="next" style="visibility:hidden">Dalej</button>
         </div>`);
-      const tShow = performance.now();
-      const optsEl = app.querySelector(".opts");
 
-      const choose = v => {
+      const itemEl = document.getElementById("qitem");
+      const countEl = document.getElementById("qcount");
+      const qbar = document.getElementById("qbar");
+      const optsEl = app.querySelector(".opts");
+      const optBtns = Array.from(optsEl.querySelectorAll(".opt"));
+      const backBtn = document.getElementById("back");
+      const nextBtn = document.getElementById("next");
+      let i = 0, tShow = 0, busy = false;
+
+      const setSel = v => optBtns.forEach(b => { const on = +b.dataset.v === v; b.classList.toggle("sel", on); b.setAttribute("aria-checked", on); });
+      const answeredCount = () => Object.keys(answers).length;
+
+      function show(idx, animate) {
+        i = idx;
+        const [n, text] = items[i];
+        const paint = () => {
+          itemEl.textContent = g(text);
+          countEl.textContent = (i + 1) + " / " + items.length;
+          setSel(answers[n]);
+          backBtn.disabled = i === 0;
+          nextBtn.style.visibility = answers[n] !== undefined ? "visible" : "hidden";
+          optsEl.classList.remove("locked");
+          itemEl.classList.remove("out");
+          tShow = performance.now();
+          busy = false;
+        };
+        if (animate) { itemEl.classList.add("out"); setTimeout(paint, 140); } else paint();
+      }
+
+      function choose(v) {
+        if (busy) return;
+        busy = true;
+        const n = items[i][0];
         if (answers[n] === undefined) tick();
         answers[n] = v;
         RT[Q.code + "_" + n] = Math.round(performance.now() - tShow);
-        optsEl.querySelectorAll(".opt").forEach(b => { const on = +b.dataset.v === v; b.classList.toggle("sel", on); b.setAttribute("aria-checked", on); });
+        setSel(v);
+        qbar.style.width = (100 * answeredCount() / items.length) + "%";
         optsEl.classList.add("locked");
-        document.removeEventListener("keydown", onKey);
-        setTimeout(advance, 280);
-      };
-      const advance = () => {
-        document.removeEventListener("keydown", onKey);
-        if (i + 1 < items.length) showItem(i + 1);
-        else doneQuestionnaire();
-      };
-      const onKey = e => {
+        setTimeout(advance, 260);
+      }
+      function advance() {
+        busy = true;
+        if (i + 1 < items.length) show(i + 1, true);
+        else { document.removeEventListener("keydown", onKey); window.onresize = null; doneQuestionnaire(); }
+      }
+      function onKey(e) {
         const k = parseInt(e.key, 10);
         if (k >= 1 && k <= Q.scale.length) choose(Q.scale[k - 1][0]);
-      };
-      optsEl.querySelectorAll(".opt").forEach(b => b.onclick = () => choose(+b.dataset.v));
+      }
+
+      optBtns.forEach(b => b.onclick = () => choose(+b.dataset.v));
+      backBtn.onclick = () => { if (!busy && i > 0) { busy = true; show(i - 1, true); } };
+      nextBtn.onclick = () => { if (!busy && answers[items[i][0]] !== undefined) advance(); };
       document.addEventListener("keydown", onKey);
-      document.getElementById("back").onclick = () => {
-        document.removeEventListener("keydown", onKey);
-        if (i > 0) showItem(i - 1);
+
+      // stała wysokość ramki = najdłuższa pozycja kwestionariusza (odpowiedzi nie „skaczą”)
+      const fitHeight = () => {
+        itemEl.style.minHeight = "0";
+        let h = 0;
+        items.forEach(([, t]) => { itemEl.textContent = g(t); h = Math.max(h, itemEl.offsetHeight); });
+        itemEl.style.minHeight = h + "px";
+        itemEl.textContent = g(items[i][1]);
       };
-      document.getElementById("back").disabled = i === 0;
-      const nx = document.getElementById("next");
-      if (nx) nx.onclick = advance;
+      fitHeight();
+      window.onresize = fitHeight;
+
+      qbar.style.width = "0%";
+      show(0, false);
     }
 
     function doneQuestionnaire() {
@@ -291,5 +324,5 @@
   // Ostrzeżenie przed przypadkowym zamknięciem w trakcie badania
   window.addEventListener("beforeunload", e => { if (!D.end_iso && step > 0) { e.preventDefault(); e.returnValue = ""; } });
 
-  showConsent();
+  showDemographics();
 })();

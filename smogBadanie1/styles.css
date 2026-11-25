@@ -83,8 +83,20 @@ input[type=number] { font: inherit; padding: 10px 12px; width: 140px; border: 1.
 .q-title { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
 .q-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .q-prompt { font-size: 15px; color: var(--muted); margin: 14px 0 6px; }
-.q-item { font-size: clamp(19px, 2.6vw, 23px); line-height: 1.45; font-weight: 500; min-height: 3.2em; margin: 0 0 26px; }
-.q-item.attn { min-height: 3.2em; }
+.item-frame {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 22px 24px 26px; margin: 0 0 22px;
+  display: flex; align-items: center;
+}
+.q-item {
+  font-size: clamp(19px, 2.6vw, 23px); line-height: 1.45; font-weight: 500; margin: 0; width: 100%;
+  display: flex; align-items: center;
+  transition: opacity .14s ease, transform .14s ease;
+}
+.q-item.out { opacity: 0; transform: translateY(4px); }
+.item-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: #eeece6; }
+.item-progress-fill { height: 100%; width: 0; background: var(--accent); transition: width .25s ease; }
 
 .opts { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 10px; }
 .opts.binary { grid-template-columns: repeat(2, minmax(0, 180px)); justify-content: center; }

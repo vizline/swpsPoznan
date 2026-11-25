@@ -8,9 +8,9 @@ Projekt: *Personalizacja komunikacji prośrodowiskowej przez GenAI w oparciu o p
 
 ## Przebieg
 
-1. Świadoma zgoda (treść z Załącznika B wniosku KE, Badanie 1) → przycisk „Rozpocznij badanie”.
+1. Świadoma zgoda jest wyświetlana na Prolific (nie na tej stronie; jej treść pozostaje w `content.js` jako `consent`).
 2. Ankieta demograficzna: płeć, wiek (18–100), lata formalnego kształcenia (0–30), wielkość miejscowości.
-3. Pięć kwestionariuszy w **losowej kolejności**. Pozycje w obrębie każdego są **losowane**, a odpowiedzi wymagane. Format karuzeli: jedna pozycja na ekranie, odpowiedzi w poziomym rzędzie, automatyczne przejście dalej, przycisk „Wstecz” (tylko w obrębie kwestionariusza). Można też odpowiadać klawiszami 1–6.
+3. Pięć kwestionariuszy w **losowej kolejności**. Pozycje w obrębie każdego są **losowane**, a odpowiedzi wymagane. Format karuzeli: treść pozycji w ramce (odświeża się tylko ramka; na jej dolnej krawędzi pasek postępu danego kwestionariusza), pod ramką odpowiedzi w poziomym rzędzie, automatyczne przejście dalej, przycisk „Wstecz” (tylko w obrębie kwestionariusza). Można też odpowiadać klawiszami 1–6.
    - PVQ-21, SPSRQ-SF (21 poz., TAK/NIE), REI-24, SZZP-10 + pozycja sprawdzająca uwagę (losowo wpleciona), moduł 14 działań.
    - Formy językowe dopasowane do płci z ankiety. Przy odpowiedzi „inna / wolę nie podawać” używane są formy podwójne (np. „podobna/podobny”).
 4. Zapis danych → informacja końcowa (debriefing).
@@ -56,7 +56,7 @@ Po każdej zmianie kodu Apps Script trzeba wybrać **Wdróż → Zarządzaj wdro
 - `szzp_1`–`szzp_10`: 1–6 (1 = zdecydowanie się nie zgadzam); `szzp_attn`: pozycja sprawdzająca uwagę (poprawnie = 3).
 - `dzial_1`–`dzial_14`: 1–5 (1 = wcale).
 
-**Uważność:** `uwaga_ok` (1 = poprawna odpowiedź na pozycję sprawdzającą; **brak automatycznego wykluczania**). Czasy w sekundach: `t_zgoda`, `t_demografia`, `t_<kw>_instr` (czytanie instrukcji), `t_<kw>` (od pierwszej pozycji do ostatniej odpowiedzi), `t_calkowity`, gdzie `<kw>` ∈ {pvq, spsrq, rei, szzp, dzial}. `czasy_pozycji_ms` (JSON: czas odpowiedzi na każdą pozycję), `kolejnosc_pozycji` (JSON: kolejność prezentacji).
+**Uważność:** `uwaga_ok` (1 = poprawna odpowiedź na pozycję sprawdzającą; **brak automatycznego wykluczania**). Czasy w sekundach: `t_demografia`, `t_<kw>_instr` (czytanie instrukcji), `t_<kw>` (od pierwszej pozycji do ostatniej odpowiedzi), `t_calkowity`, gdzie `<kw>` ∈ {pvq, spsrq, rei, szzp, dzial}. `czasy_pozycji_ms` (JSON: czas odpowiedzi na każdą pozycję), `kolejnosc_pozycji` (JSON: kolejność prezentacji).
 
 **Wskaźniki obliczone w przeglądarce** (do kontroli; w analizach liczyć ponownie z pozycji surowych):
 - PVQ (wg składni z pliku PVQ-21: odwrócenie 7 − x, centrowanie względem średniej z 21 pozycji): `sc_pvq_mrat`, 10 wartości `sc_pvq_bezpieczenstwo … sc_pvq_wladza`, wymiary wyższego rzędu `sc_pvq_SelfTranscendence`, `sc_pvq_SelfEnhancement`, `sc_pvq_OpennessToChange`, `sc_pvq_Conservation`.
