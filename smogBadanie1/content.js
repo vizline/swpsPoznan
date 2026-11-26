@@ -45,7 +45,7 @@ window.CONTENT = {
     PVQ: {
       code: "pvq",
       title: "Opisy osób",
-      instruction: `<p>Przeczytaj poniżej opisy różnych osób. Zaznacz, w jakim stopniu każda z tych osób jest (lub też nie jest) podobna do Ciebie.</p>`,
+      instruction: `<p>Na kolejnych ekranach przeczytasz opisy różnych osób. Zaznacz, w jakim stopniu każda z tych osób jest (lub też nie jest) podobna do Ciebie.</p>`,
       prompt: "W jakim stopniu ta osoba jest podobna do Ciebie?",
       scale: [
         [1, "Bardzo {podobna|podobny} do mnie"],
@@ -87,7 +87,7 @@ window.CONTENT = {
     SPSRQ: {
       code: "spsrq",
       title: "Pytania o Twoje zachowania",
-      instruction: `<p>Poniżej znajduje się lista pytań dotyczących Twoich zachowań i odczuć w różnych sytuacjach. Na każde pytanie odpowiedz <strong>TAK</strong> albo <strong>NIE</strong>. Nie ma odpowiedzi dobrych ani złych – odpowiadaj zgodnie z tym, jak zwykle się zachowujesz.</p>`,
+      instruction: `<p>Na kolejnych ekranach zobaczysz pytania dotyczące Twoich zachowań i odczuć w różnych sytuacjach. Na każde pytanie odpowiedz <strong>TAK</strong> albo <strong>NIE</strong>. Nie ma odpowiedzi dobrych ani złych – odpowiadaj zgodnie z tym, jak zwykle się zachowujesz.</p>`,
       prompt: "",
       scale: [[1, "TAK"], [0, "NIE"]],
       items: [
@@ -121,7 +121,7 @@ window.CONTENT = {
     REI: {
       code: "rei",
       title: "Twierdzenia o sposobie myślenia",
-      instruction: `<p>Poniżej znajduje się lista 24 twierdzeń, które odnoszą się do Twoich uczuć, przekonań i zachowań. Oceń, na ile prawdziwe jest każde z tych twierdzeń w odniesieniu do Ciebie.</p>`,
+      instruction: `<p>Na kolejnych ekranach zobaczysz 24 twierdzenia, które odnoszą się do Twoich uczuć, przekonań i zachowań. Oceń, na ile prawdziwe jest każde z tych twierdzeń w odniesieniu do Ciebie.</p>`,
       prompt: "Na ile to twierdzenie jest prawdziwe w odniesieniu do Ciebie?",
       scale: [
         [1, "Zdecydowanie nieprawdziwe"],
@@ -163,7 +163,7 @@ window.CONTENT = {
     SZZP: {
       code: "szzp",
       title: "Zanieczyszczenie powietrza",
-      instruction: `<p>Poniżej znajduje się zestaw stwierdzeń dotyczących zanieczyszczenia powietrza oraz codziennych reakcji na nie. Prosimy ocenić, w jakim stopniu zgadza się {Pani|Pan|Pan/Pani} z każdym z nich, zaznaczając jedną z sześciu odpowiedzi na skali. Nie ma odpowiedzi dobrych ani złych – interesuje nas {Pani|Pana|Pana/Pani} osobiste zdanie.</p>`,
+      instruction: `<p>Na kolejnych ekranach zobaczy {Pani|Pan|Pan/Pani} stwierdzenia dotyczące zanieczyszczenia powietrza oraz codziennych reakcji na nie. Prosimy ocenić, w jakim stopniu zgadza się {Pani|Pan|Pan/Pani} z każdym z nich, zaznaczając jedną z sześciu odpowiedzi na skali. Nie ma odpowiedzi dobrych ani złych – interesuje nas {Pani|Pana|Pana/Pani} osobiste zdanie.</p>`,
       prompt: "W jakim stopniu zgadza się {Pani|Pan|Pan/Pani} z tym stwierdzeniem?",
       scale: [
         [1, "Zdecydowanie się nie zgadzam"],
@@ -192,7 +192,7 @@ window.CONTENT = {
     DZIAL: {
       code: "dzial",
       title: "Działania na rzecz czystego powietrza",
-      instruction: `<p>Poniżej znajduje się lista działań, które można podjąć na rzecz czystszego powietrza. Prosimy ocenić, na ile jest {Pani|Pan|Pan/Pani} {skłonna|skłonny|skłonny/skłonna} podjąć każde z nich w ciągu najbliższych trzech miesięcy. Nie ma odpowiedzi dobrych ani złych – interesuje nas wyłącznie {Pani|Pana|Pana/Pani} zdanie. Udzielenie odpowiedzi nie zobowiązuje do podjęcia żadnego z tych działań.</p>`,
+      instruction: `<p>Na kolejnych ekranach zobaczy {Pani|Pan|Pan/Pani} działania, które można podjąć na rzecz czystszego powietrza. Prosimy ocenić, na ile jest {Pani|Pan|Pan/Pani} {skłonna|skłonny|skłonny/skłonna} podjąć każde z nich w ciągu najbliższych trzech miesięcy. Nie ma odpowiedzi dobrych ani złych – interesuje nas wyłącznie {Pani|Pana|Pana/Pani} zdanie. Udzielenie odpowiedzi nie zobowiązuje do podjęcia żadnego z tych działań.</p>`,
       prompt: "Na ile jest {Pani|Pan|Pan/Pani} {skłonna|skłonny|skłonny/skłonna}…",
       scale: [
         [1, "Wcale"],

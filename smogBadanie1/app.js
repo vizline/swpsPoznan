@@ -324,5 +324,35 @@
   // Ostrzeżenie przed przypadkowym zamknięciem w trakcie badania
   window.addEventListener("beforeunload", e => { if (!D.end_iso && step > 0) { e.preventDefault(); e.returnValue = ""; } });
 
-  showDemographics();
+  /* ================= 0. SPRAWDZENIE URZĄDZENIA =================
+     Badanie tylko na komputerze z dużym ekranem. Telefony i tablety są blokowane;
+     zbyt wąskie okno przeglądarki na komputerze – prośba o powiększenie okna. */
+  const MIN_WIDTH = 1000;
+  function deviceStatus() {
+    const ua = navigator.userAgent || "";
+    const mobileUA = /Android|iPhone|iPad|iPod|Mobile|Windows Phone|Silk|Kindle|Opera Mini|IEMobile/i.test(ua);
+    const iPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1; // iPad udający Maca
+    const touchOnly = matchMedia("(pointer: coarse)").matches && !matchMedia("(any-pointer: fine)").matches;
+    const smallScreen = Math.max(screen.width, screen.height) < MIN_WIDTH;
+    if (mobileUA || iPadOS || touchOnly || smallScreen) return "mobile";
+    if (window.innerWidth < MIN_WIDTH) return "narrow";
+    return "ok";
+  }
+  function gate() {
+    const st = deviceStatus();
+    if (st === "ok") { window.onresize = null; return showDemographics(); }
+    if (st === "mobile") {
+      render(`<h2>Badanie wymaga komputera</h2>
+        <p>To badanie można wypełnić wyłącznie na komputerze stacjonarnym lub laptopie z dużym ekranem. Wygląda na to, że korzysta Pan/Pani z telefonu lub tabletu.</p>
+        <p>Prosimy otworzyć ten sam link na komputerze. Jeśli to niemożliwe, prosimy zamknąć tę stronę i zwrócić badanie na platformie Prolific („Return”).</p>`);
+      window.onresize = null;
+    } else {
+      render(`<h2>Prosimy powiększyć okno przeglądarki</h2>
+        <p>Okno przeglądarki jest zbyt wąskie, aby wygodnie wypełnić badanie. Prosimy zmaksymalizować okno (lub zmniejszyć powiększenie strony, np. Ctrl + −).</p>
+        <p class="small">Badanie rozpocznie się automatycznie, gdy okno będzie wystarczająco szerokie.</p>`);
+      window.onresize = () => { if (deviceStatus() === "ok") gate(); };
+    }
+  }
+
+  gate();
 })();

@@ -8,6 +8,7 @@ Projekt: *Personalizacja komunikacji prośrodowiskowej przez GenAI w oparciu o p
 
 ## Przebieg
 
+0. Sprawdzenie urządzenia: telefony i tablety (rozpoznawane po przeglądarce, ekranie dotykowym i rozmiarze ekranu < 1000 px) dostają komunikat, że badanie wymaga komputera, i nie mogą go rozpocząć. Na komputerze ze zbyt wąskim oknem (< 1000 px) pojawia się prośba o powiększenie okna; badanie startuje samo po powiększeniu.
 1. Świadoma zgoda jest wyświetlana na Prolific (nie na tej stronie; jej treść pozostaje w `content.js` jako `consent`).
 2. Ankieta demograficzna: płeć, wiek (18–100), lata formalnego kształcenia (0–30), wielkość miejscowości.
 3. Pięć kwestionariuszy w **losowej kolejności**. Pozycje w obrębie każdego są **losowane**, a odpowiedzi wymagane. Format karuzeli: treść pozycji w ramce (odświeża się tylko ramka; na jej dolnej krawędzi pasek postępu danego kwestionariusza), pod ramką odpowiedzi w poziomym rzędzie, automatyczne przejście dalej, przycisk „Wstecz” (tylko w obrębie kwestionariusza). Można też odpowiadać klawiszami 1–6.
@@ -71,3 +72,4 @@ Po każdej zmianie kodu Apps Script trzeba wybrać **Wdróż → Zarządzaj wdro
 - SPSRQ-SF: poprawki „zabawne”, „coś”, interpunkcja. Formy zależne od płci w poz. 10, 16, 17, 21, 22, 23. Instrukcja jest **autorska**, bo artykuł adaptacyjny jej nie podaje.
 - REI-24: „zdecydowanie”, „muszę”, interpunkcja. Formy zależne od płci w poz. 9, 12, 13.
 - SZZP i moduł działań: zwroty „Pan/Pani”, „skłonny/skłonna” dopasowane do płci.
+- Wszystkie instrukcje: „Poniżej znajduje się…” / „Przeczytaj poniżej…” zmienione na „Na kolejnych ekranach…”, bo pozycje pojawiają się na osobnych ekranach.
