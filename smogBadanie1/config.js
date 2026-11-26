@@ -9,7 +9,7 @@ window.CONFIG = {
   // Adres aplikacji internetowej Google Apps Script (kończy się na /exec).
   // Puste = tryb offline: dane nie są nigdzie wysyłane, a na końcu pojawia
   // się podgląd danych i przycisk pobrania JSON (do testów).
-  ENDPOINT: "",
+  ENDPOINT: "https://script.google.com/macros/s/AKfycbyp_YD2kMglFv1cPHrZh_x57QoyCgBqJMDezzXRacdOXMNGfgiw6rTyByNpgaq50aAv/exec",
 
   // Ten sam ciąg co TOKEN w skrypcie Apps Script (prosty filtr przypadkowych
   // zapisów; nie jest to zabezpieczenie kryptograficzne, bo kod strony jest jawny).
