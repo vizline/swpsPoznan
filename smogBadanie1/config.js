@@ -13,7 +13,7 @@ window.CONFIG = {
 
   // Ten sam ciąg co TOKEN w skrypcie Apps Script (prosty filtr przypadkowych
   // zapisów; nie jest to zabezpieczenie kryptograficzne, bo kod strony jest jawny).
-  TOKEN: "smog-b1-zmien-mnie",
+  TOKEN: "smogB1-de3b287e0354d4ca",
 
   // Numer opinii Komisji ds. Etyki – wstawiany do treści zgody.
   OPINIA_NR: "[NR OPINII]",

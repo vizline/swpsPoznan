@@ -10,7 +10,7 @@
  */
 
 // ===== USTAWIENIA =====
-const TOKEN = "smog-b1-zmien-mnie";   // ten sam ciąg co CONFIG.TOKEN w config.js
+const TOKEN = "smogB1-de3b287e0354d4ca";   // ten sam ciąg co CONFIG.TOKEN w config.js
 const SHEET_DATA = "dane";
 const SHEET_IDS = "id_prolific";
 const ID_SPREADSHEET_ID = "";          // opcjonalnie: ID osobnego arkusza na identyfikatory Prolific
