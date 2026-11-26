@@ -235,23 +235,29 @@
     };
     D.sc_pvq_mrat = r3(mrat);
     Object.entries(S).forEach(([k, x]) => D["sc_pvq_" + k] = r3(x));
+    // Wymiary wyższego rzędu wg modelu 10 wartości (Schwartz, 1992), do którego odwołuje się PVQ-21.
+    //  Przekraczanie siebie i Zachowawczość – klucz standardowy (jednoznaczny).
+    //  Hedonizm (granica Otwartości i Umacniania siebie) → Umacnianie siebie: treść pozycji
+    //  (dogadzanie sobie, własna przyjemność) to gratyfikacja ukierunkowana na siebie; wartości
+    //  hedonistyczne przewidują słabsze postawy prośrodowiskowe (Steg i in., 2014).
+    //  Wartość sc_pvq_hedonizm jest zapisywana osobno, więc w analizach można ją przypisać inaczej.
     D.sc_pvq_SelfTranscendence = r3(mean([S.zyczliwosc, S.uniwersalizm]));
-    D.sc_pvq_SelfEnhancement = r3(mean([S.osiagniecia, S.wladza]));
-    D.sc_pvq_OpennessToChange = r3(mean([S.kierowanieSoba, S.stymulacja, S.hedonizm]));
     D.sc_pvq_Conservation = r3(mean([S.bezpieczenstwo, S.przystosowanie, S.tradycja]));
+    D.sc_pvq_OpennessToChange = r3(mean([S.kierowanieSoba, S.stymulacja]));
+    D.sc_pvq_SelfEnhancement = r3(mean([S.osiagniecia, S.wladza, S.hedonizm]));
 
     // SPSRQ-SF (21): sumy odpowiedzi TAK
     D.sc_spsrq_SP = sum([2, 3, 7, 8, 10, 12, 14, 16, 17, 19, 20, 21, 23].map(n => v("spsrq", n)));
     D.sc_spsrq_SR = sum([4, 5, 9, 13, 15, 18, 22, 24].map(n => v("spsrq", n)));
 
-    // REI-24: sumy (pozycje odwrócone: 6 − x)
-    const rei = (list) => sum(list.map(s => s.endsWith("r") ? 6 - v("rei", parseInt(s)) : v("rei", parseInt(s))));
-    D.sc_rei_RA = rei(["1", "5r", "9", "13r", "19", "23r"]);
-    D.sc_rei_RF = rei(["2r", "6", "15", "18r", "22", "24r"]);
-    D.sc_rei_EA = rei(["3", "7r", "10", "12r", "16", "20r"]);
-    D.sc_rei_EF = rei(["4r", "8", "11r", "14", "17r", "21"]);
-    D.sc_rei_racjonalnosc = D.sc_rei_RA + D.sc_rei_RF;
-    D.sc_rei_doswiadczeniowosc = D.sc_rei_EA + D.sc_rei_EF;
+    // REI-24: średnie 1–5 (pozycje odwrócone: 6 − x)
+    const reiItems = list => list.map(s => s.endsWith("r") ? 6 - v("rei", parseInt(s)) : v("rei", parseInt(s)));
+    const RA = reiItems(["1", "5r", "9", "13r", "19", "23r"]), RF = reiItems(["2r", "6", "15", "18r", "22", "24r"]);
+    const EA = reiItems(["3", "7r", "10", "12r", "16", "20r"]), EF = reiItems(["4r", "8", "11r", "14", "17r", "21"]);
+    D.sc_rei_RA = r3(mean(RA)); D.sc_rei_RF = r3(mean(RF));
+    D.sc_rei_EA = r3(mean(EA)); D.sc_rei_EF = r3(mean(EF));
+    D.sc_rei_racjonalnosc = r3(mean(RA.concat(RF)));
+    D.sc_rei_doswiadczeniowosc = r3(mean(EA.concat(EF)));
 
     // SZZP-10: średnie (odwrócone 5 i 10: 7 − x)
     const sz = n => (n === 5 || n === 10) ? 7 - v("szzp", n) : v("szzp", n);

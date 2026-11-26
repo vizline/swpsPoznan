@@ -4,7 +4,7 @@
    ===================================================================== */
 window.CONFIG = {
   // Wersja procedury – zapisywana w każdym wierszu danych.
-  WERSJA: "B1-v1.0",
+  WERSJA: "B1-v1.1",
 
   // Adres aplikacji internetowej Google Apps Script (kończy się na /exec).
   // Puste = tryb offline: dane nie są nigdzie wysyłane, a na końcu pojawia

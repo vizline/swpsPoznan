@@ -60,9 +60,14 @@ Po każdej zmianie kodu Apps Script trzeba wybrać **Wdróż → Zarządzaj wdro
 **Uważność:** `uwaga_ok` (1 = poprawna odpowiedź na pozycję sprawdzającą; **brak automatycznego wykluczania**). Czasy w sekundach: `t_demografia`, `t_<kw>_instr` (czytanie instrukcji), `t_<kw>` (od pierwszej pozycji do ostatniej odpowiedzi), `t_calkowity`, gdzie `<kw>` ∈ {pvq, spsrq, rei, szzp, dzial}. `czasy_pozycji_ms` (JSON: czas odpowiedzi na każdą pozycję), `kolejnosc_pozycji` (JSON: kolejność prezentacji).
 
 **Wskaźniki obliczone w przeglądarce** (do kontroli; w analizach liczyć ponownie z pozycji surowych):
-- PVQ (wg składni z pliku PVQ-21: odwrócenie 7 − x, centrowanie względem średniej z 21 pozycji): `sc_pvq_mrat`, 10 wartości `sc_pvq_bezpieczenstwo … sc_pvq_wladza`, wymiary wyższego rzędu `sc_pvq_SelfTranscendence`, `sc_pvq_SelfEnhancement`, `sc_pvq_OpennessToChange`, `sc_pvq_Conservation`.
+- PVQ (wg składni z pliku PVQ-21: odwrócenie 7 − x, centrowanie względem średniej z 21 pozycji): `sc_pvq_mrat`, 10 wartości `sc_pvq_bezpieczenstwo … sc_pvq_wladza`. Wymiary wyższego rzędu (średnie z wartości, od wersji B1-v1.1):
+  - `sc_pvq_SelfTranscendence` = uniwersalizm + życzliwość
+  - `sc_pvq_Conservation` = bezpieczeństwo + przystosowanie + tradycja
+  - `sc_pvq_OpennessToChange` = kierowanie sobą + stymulacja
+  - `sc_pvq_SelfEnhancement` = osiągnięcia + władza + **hedonizm**
+  - Hedonizm leży na granicy Otwartości i Umacniania siebie. Przypisano go do Umacniania siebie, bo treść pozycji („dogadzać sobie”, „to, co sprawia jej/mu przyjemność”) to gratyfikacja ukierunkowana na siebie, a wartości hedonistyczne przewidują słabsze postawy prośrodowiskowe (Steg i in., 2014). Składnia SPSS z pliku PVQ-21 włącza hedonizm do Otwartości – przy porównaniach z literaturą liczyć wariant alternatywny z `sc_pvq_hedonizm`.
 - SPSRQ: `sc_spsrq_SP` (suma 13 poz., 0–13), `sc_spsrq_SR` (suma 8 poz., 0–8).
-- REI (sumy, odwrócenie 6 − x): `sc_rei_RA`, `sc_rei_RF`, `sc_rei_EA`, `sc_rei_EF`, `sc_rei_racjonalnosc` (12–60), `sc_rei_doswiadczeniowosc` (12–60).
+- REI (średnie 1–5, odwrócenie 6 − x; od wersji B1-v1.1): `sc_rei_RA`, `sc_rei_RF`, `sc_rei_EA`, `sc_rei_EF`, `sc_rei_racjonalnosc`, `sc_rei_doswiadczeniowosc`. Wiersze z wersji B1-v1.0 mają tu sumy.
 - SZZP (średnie, odwrócone 5 i 10: 7 − x): `sc_szzp_afekt`, `sc_szzp_zachowania`, `sc_szzp_ogolny`.
 - Działania: `sc_dzial_srednia`.
 
